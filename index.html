@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Natural Brand - Premium Natural Hair Care</title>
+    <meta name="description" content="Premium e-commerce website design for Pure Natural Brand - luxury hair care with nature-inspired aesthetics">
+    
+    <!-- CSS Styles -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #8a9a8b 0%, #6c7b6d 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: #8a9a8b;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%238a9a8b" width="1200" height="600"/><circle fill="%23ffffff" opacity="0.1" cx="200" cy="150" r="100"/><circle fill="%23ffffff" opacity="0.1" cx="1000" cy="450" r="150"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 0;
+            margin: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #e67e22;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #d35400;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
+        }
+
+        /* Main Content */
+        main {
+            padding: 4rem 0;
+        }
+
+        .section {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #8a9a8b;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 1rem;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: #8a9a8b;
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #8a9a8b;
+        }
+
+        .product-card h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card p {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+
+        .product-button {
+            background: #8a9a8b;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .product-button:hover {
+            background: #6c7b6d;
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #e67e22;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #e67e22;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #d35400;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">🌿 Pure Natural Brand</div>
+            <div class="tagline">Nature's Luxury, Handcrafted Excellence</div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 class="fade-in">Transform Your Hair Naturally</h1>
+            <p class="fade-in">Premium Natural Hair Care Products</p>
+            <a href="#products" class="cta-button fade-in">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Products Section -->
+            <section class="section" id="products">
+                <h2>🌿 Our Premium Hair Care Collection</h2>
+                <div class="product-grid">
+                    <div class="product-card fade-in">
+                        <div class="product-icon">🧴</div>
+                        <h3>Botanical Repair Shampoo</h3>
+                        <p>Transform damaged hair with our signature botanical blend of argan oil, aloe vera, and natural proteins.</p>
+                        <div class="product-price">$24.99</div>
+                        <a href="#" class="product-button">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card fade-in">
+                        <div class="product-icon">✨</div>
+                        <h3>Natural Hair Oil</h3>
+                        <p>Luxurious moisture and shine for all hair types. Lightweight, non-greasy formula with heat protection.</p>
+                        <div class="product-price">$29.99</div>
+                        <a href="#" class="product-button">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card fade-in">
+                        <div class="product-icon">🎁</div>
+                        <h3>Complete Hair Care Set</h3>
+                        <p>Your complete natural hair care routine. Includes shampoo, conditioner, hair mask, and oil.</p>
+                        <div class="product-price">$89.99</div>
+                        <a href="#" class="product-button">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card fade-in">
+                        <div class="product-icon">💧</div>
+                        <h3>Deep Moisture Conditioner</h3>
+                        <p>Intense hydration and detangling. Smooths cuticles and reduces frizz for silky smooth hair.</p>
+                        <div class="product-price">$24.99</div>
+                        <a href="#" class="product-button">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card fade-in">
+                        <div class="product-icon">🧴</div>
+                        <h3>Intensive Repair Hair Mask</h3>
+                        <p>Deep repair and strengthening. Weekly intensive treatment that restores hair health and vitality.</p>
+                        <div class="product-price">$32.99</div>
+                        <a href="#" class="product-button">Add to Cart</a>
+                    </div>
+
+                    <div class="product-card fade-in">
+                        <div class="product-icon">🎨</div>
+                        <h3>Color Protection Conditioner</h3>
+                        <p>Protects color, prevents fading, and maintains vibrancy for color-treated hair.</p>
+                        <div class="product-price">$26.99</div>
+                        <a href="#" class="product-button">Add to Cart</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section class="section" id="about">
+                <h2>💚 About Pure Natural Brand</h2>
+                <div class="features">
+                    <div class="feature fade-in">
+                        <div class="feature-icon">🌱</div>
+                        <h3>100% Natural Ingredients</h3>
+                        <p>No harsh chemicals, sulfates, or parabens. Only premium botanical extracts and natural oils.</p>
+                    </div>
+                    <div class="feature fade-in">
+                        <div class="feature-icon">🏭</div>
+                        <h3>Handcrafted Excellence</h3>
+                        <p>Small-batch production ensures quality. Every product crafted with care and attention.</p>
+                    </div>
+                    <div class="feature fade-in">
+                        <div class="feature-icon">🦘</div>
+                        <h3>Cruelty-Free</h3>
+                        <p>Never tested on animals. We believe in ethical beauty that respects all living creatures.</p>
+                    </div>
+                    <div class="feature fade-in">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Eco-Friendly</h3>
+                        <p>Sustainable packaging and practices. Caring for your hair while caring for the planet.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="section" id="features">
+                <h2>✨ Why Choose Pure Natural Brand?</h2>
+                <div class="features">
+                    <div class="feature fade-in">
+                        <div class="feature-icon">⭐</div>
+                        <h3>Proven Results</h3>
+                        <p>Visible improvement in 2-3 weeks. Thousands of satisfied customers worldwide.</p>
+                    </div>
+                    <div class="feature fade-in">
+                        <div class="feature-icon">🔒</div>
+                        <h3>30-Day Guarantee</h3>
+                        <p>Full refund if not completely satisfied. We stand behind every product.</p>
+                    </div>
+                    <div class="feature fade-in">
+                        <div class="feature-icon">🚚</div>
+                        <h3>Free Shipping</h3>
+                        <p>Free shipping on orders over $50. Fast delivery to your doorstep.</p>
+                    </div>
+                    <div class="feature fade-in">
+                        <div class="feature-icon">💬</div>
+                        <h3>24/7 Support</h3>
+                        <p>Expert customer support available whenever you need help or have questions.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🌿 Pure Natural Brand</h3>
+                    <p>Transform your hair naturally with our premium botanical hair care products. Handcrafted with love and nature's finest ingredients.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>📞 Contact Us</h3>
+                    <p>Email: support@purenaturalbrand.com</p>
+                    <p>Phone: 1-800-PURE-NAT</p>
+                    <p>Hours: 24/7 Customer Support</p>
+                </div>
+                <div class="footer-section">
+                    <h3>🚚 Shipping & Returns</h3>
+                    <p>Free shipping on orders over $50</p>
+                    <p>30-day satisfaction guarantee</p>
+                    <p>Fast delivery nationwide</p>
+                </div>
+                <div class="footer-section">
+                    <h3>📱 Follow Us</h3>
+                    <p>Stay connected for exclusive offers, hair care tips, and product updates.</p>
+                    <div class="social-links">
+                        <a href="#" title="Instagram">📷</a>
+                        <a href="#" title="Facebook">📘</a>
+                        <a href="#" title="Pinterest">📌</a>
+                        <a href="#" title="YouTube">📺</a>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #34495e; padding-top: 2rem; text-align: center;">
+                <p>&copy; 2024 Pure Natural Brand. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Smooth Scrolling -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add fade-in animation to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all product cards and features
+        document.querySelectorAll('.product-card, .feature').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some interactivity to product cards
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
