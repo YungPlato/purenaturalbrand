@@ -453,54 +453,8 @@
             <section class="section" id="products">
                 <h2>🌿 Our Premium Hair Care Collection</h2>
                 <div class="carousel" data-carousel="products">
-                    <div class="carousel-track product-grid">
-                    <div class="product-card fade-in carousel-item">
-                        <div class="product-icon">🧴</div>
-                        <h3>Botanical Repair Shampoo</h3>
-                        <p>Transform damaged hair with our signature botanical blend of argan oil, aloe vera, and natural proteins.</p>
-                        <div class="product-price">$24.99</div>
-                        <a href="#" class="product-button">Add to Cart</a>
-                    </div>
-
-                    <div class="product-card fade-in carousel-item">
-                        <div class="product-icon">✨</div>
-                        <h3>Natural Hair Oil</h3>
-                        <p>Luxurious moisture and shine for all hair types. Lightweight, non-greasy formula with heat protection.</p>
-                        <div class="product-price">$29.99</div>
-                        <a href="#" class="product-button">Add to Cart</a>
-                    </div>
-
-                    <div class="product-card fade-in carousel-item">
-                        <div class="product-icon">🎁</div>
-                        <h3>Complete Hair Care Set</h3>
-                        <p>Your complete natural hair care routine. Includes shampoo, conditioner, hair mask, and oil.</p>
-                        <div class="product-price">$89.99</div>
-                        <a href="#" class="product-button">Add to Cart</a>
-                    </div>
-
-                    <div class="product-card fade-in carousel-item">
-                        <div class="product-icon">💧</div>
-                        <h3>Deep Moisture Conditioner</h3>
-                        <p>Intense hydration and detangling. Smooths cuticles and reduces frizz for silky smooth hair.</p>
-                        <div class="product-price">$24.99</div>
-                        <a href="#" class="product-button">Add to Cart</a>
-                    </div>
-
-                    <div class="product-card fade-in carousel-item">
-                        <div class="product-icon">🧴</div>
-                        <h3>Intensive Repair Hair Mask</h3>
-                        <p>Deep repair and strengthening. Weekly intensive treatment that restores hair health and vitality.</p>
-                        <div class="product-price">$32.99</div>
-                        <a href="#" class="product-button">Add to Cart</a>
-                    </div>
-
-                    <div class="product-card fade-in carousel-item">
-                        <div class="product-icon">🎨</div>
-                        <h3>Color Protection Conditioner</h3>
-                        <p>Protects color, prevents fading, and maintains vibrancy for color-treated hair.</p>
-                        <div class="product-price">$26.99</div>
-                        <a href="#" class="product-button">Add to Cart</a>
-                    </div>
+                    <div class="carousel-track product-grid" id="product-track">
+                        <!-- Products will be injected here via /api/products -->
                     </div>
                     <div class="carousel-nav">
                         <button class="carousel-button" data-dir="-1">‹</button>
@@ -619,6 +573,15 @@
                         <a href="#" title="YouTube">📺</a>
                     </div>
                 </div>
+                <div class="footer-section">
+                    <h3>📧 Newsletter</h3>
+                    <p>Get insider tips and exclusive offers. Unsubscribe anytime.</p>
+                    <form id="newsletter-form" style="display:flex; gap:0.5rem; justify-content:center; margin-top:0.5rem;">
+                        <input type="email" name="email" placeholder="you@example.com" required style="padding:0.7rem 1rem; border-radius:30px; border:none; outline:none; min-width:240px;">
+                        <button type="submit" class="cta-button" style="padding:0.7rem 1.2rem;">Subscribe</button>
+                    </form>
+                    <div id="newsletter-msg" style="margin-top:0.5rem; color:#bdc3c7;"></div>
+                </div>
             </div>
             <div style="border-top: 1px solid #34495e; padding-top: 2rem; text-align: center;">
                 <p>&copy; 2024 Pure Natural Brand. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
@@ -648,6 +611,31 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('fade-in'); });
         }, observerOptions);
         document.querySelectorAll('.product-card, .feature, .section h2').forEach(el => observer.observe(el));
+
+        // Fetch products dynamically from serverless API and render
+        async function loadProducts() {
+            try {
+                const res = await fetch('/api/products');
+                const data = await res.json();
+                const track = document.getElementById('product-track');
+                track.innerHTML = '';
+                data.products.forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'product-card fade-in carousel-item';
+                    item.innerHTML = `
+                        <div class="product-icon">${p.icon}</div>
+                        <h3>${p.name}</h3>
+                        <p>${p.description}</p>
+                        <div class="product-price">$${p.price.toFixed(2)}</div>
+                        <a href="#" class="product-button">Add to Cart</a>
+                    `;
+                    track.appendChild(item);
+                });
+                // Re-observe new elements
+                document.querySelectorAll('#product-track .product-card').forEach(el => observer.observe(el));
+            } catch (e) { console.error('Failed to load products', e); }
+        }
+        loadProducts();
 
         // Product card hover interactivity
         document.querySelectorAll('.product-card').forEach(card => {
@@ -686,6 +674,29 @@
         }
 
         document.querySelectorAll('.carousel').forEach(setupCarousel);
+
+        // Newsletter form submission to serverless API
+        const form = document.getElementById('newsletter-form');
+        const msg  = document.getElementById('newsletter-msg');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = new FormData(form).get('email');
+                msg.textContent = 'Subscribing...';
+                try {
+                    const res = await fetch('/api/subscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await res.json();
+                    msg.textContent = data.ok ? 'Thanks for subscribing!' : (data.error || 'Something went wrong');
+                    if (data.ok) form.reset();
+                } catch (err) {
+                    msg.textContent = 'Network error. Please try again.';
+                }
+            });
+        }
     </script>
 </body>
 </html>
