@@ -83,26 +83,70 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%238a9a8b" width="1200" height="600"/><circle fill="%23ffffff" opacity="0.1" cx="200" cy="150" r="100"/><circle fill="%23ffffff" opacity="0.1" cx="1000" cy="450" r="150"/></svg>');
-            background-size: cover;
-            background-position: center;
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
             color: white;
-            text-align: center;
-            padding: 6rem 0;
             margin: 2rem 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=1960&auto=format&fit=crop') center/cover no-repeat;
+            transform: scale(1.05);
+            filter: contrast(1.05) saturate(1.05);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(30, 55, 42, 0.65), rgba(20, 20, 20, 0.35));
+            backdrop-filter: blur(1px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+            padding: 4rem 1.5rem;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
+            line-height: 1.15;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             margin-bottom: 2rem;
-            opacity: 0.9;
+            opacity: 0.95;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0) 60%);
+            border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+            mix-blend-mode: soft-light;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .leaf.leaf-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .leaf.leaf-2 { bottom: 12%; right: 8%; animation-delay: 2s; }
+        .leaf.leaf-3 { top: 30%; right: 20%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(8deg); }
         }
 
         .cta-button {
@@ -146,13 +190,54 @@
             padding-bottom: 1rem;
         }
 
-        /* Product Grid */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        /* Carousel */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
             margin-top: 2rem;
         }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            padding: 0.5rem 0.25rem 1rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .carousel-track::-webkit-scrollbar { display: none; }
+
+        .carousel-item { flex: 0 0 320px; }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .carousel-button {
+            pointer-events: all;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
+
+        /* Product Cards */
+        .product-grid { display: contents; }
 
         .product-card {
             background: white;
@@ -349,10 +434,15 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="container">
-            <h1 class="fade-in">Transform Your Hair Naturally</h1>
-            <p class="fade-in">Premium Natural Hair Care Products</p>
-            <a href="#products" class="cta-button fade-in">Shop Now</a>
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="leaf leaf-1" aria-hidden="true"></div>
+        <div class="leaf leaf-2" aria-hidden="true"></div>
+        <div class="leaf leaf-3" aria-hidden="true"></div>
+        <div class="container hero-content">
+            <h1 class="fade-in">Repair. Strengthen. Shine.</h1>
+            <p class="fade-in">Salon-level results powered by botanicals and clean science.</p>
+            <a href="#products" class="cta-button fade-in">Shop the Collection</a>
         </div>
     </section>
 
@@ -362,8 +452,9 @@
             <!-- Products Section -->
             <section class="section" id="products">
                 <h2>🌿 Our Premium Hair Care Collection</h2>
-                <div class="product-grid">
-                    <div class="product-card fade-in">
+                <div class="carousel" data-carousel="products">
+                    <div class="carousel-track product-grid">
+                    <div class="product-card fade-in carousel-item">
                         <div class="product-icon">🧴</div>
                         <h3>Botanical Repair Shampoo</h3>
                         <p>Transform damaged hair with our signature botanical blend of argan oil, aloe vera, and natural proteins.</p>
@@ -371,7 +462,7 @@
                         <a href="#" class="product-button">Add to Cart</a>
                     </div>
 
-                    <div class="product-card fade-in">
+                    <div class="product-card fade-in carousel-item">
                         <div class="product-icon">✨</div>
                         <h3>Natural Hair Oil</h3>
                         <p>Luxurious moisture and shine for all hair types. Lightweight, non-greasy formula with heat protection.</p>
@@ -379,7 +470,7 @@
                         <a href="#" class="product-button">Add to Cart</a>
                     </div>
 
-                    <div class="product-card fade-in">
+                    <div class="product-card fade-in carousel-item">
                         <div class="product-icon">🎁</div>
                         <h3>Complete Hair Care Set</h3>
                         <p>Your complete natural hair care routine. Includes shampoo, conditioner, hair mask, and oil.</p>
@@ -387,7 +478,7 @@
                         <a href="#" class="product-button">Add to Cart</a>
                     </div>
 
-                    <div class="product-card fade-in">
+                    <div class="product-card fade-in carousel-item">
                         <div class="product-icon">💧</div>
                         <h3>Deep Moisture Conditioner</h3>
                         <p>Intense hydration and detangling. Smooths cuticles and reduces frizz for silky smooth hair.</p>
@@ -395,7 +486,7 @@
                         <a href="#" class="product-button">Add to Cart</a>
                     </div>
 
-                    <div class="product-card fade-in">
+                    <div class="product-card fade-in carousel-item">
                         <div class="product-icon">🧴</div>
                         <h3>Intensive Repair Hair Mask</h3>
                         <p>Deep repair and strengthening. Weekly intensive treatment that restores hair health and vitality.</p>
@@ -403,12 +494,42 @@
                         <a href="#" class="product-button">Add to Cart</a>
                     </div>
 
-                    <div class="product-card fade-in">
+                    <div class="product-card fade-in carousel-item">
                         <div class="product-icon">🎨</div>
                         <h3>Color Protection Conditioner</h3>
                         <p>Protects color, prevents fading, and maintains vibrancy for color-treated hair.</p>
                         <div class="product-price">$26.99</div>
                         <a href="#" class="product-button">Add to Cart</a>
+                    </div>
+                    </div>
+                    <div class="carousel-nav">
+                        <button class="carousel-button" data-dir="-1">‹</button>
+                        <button class="carousel-button" data-dir="1">›</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="section" id="testimonials">
+                <h2>💬 Loved by Natural Beauty Enthusiasts</h2>
+                <div class="carousel" data-carousel="testimonials">
+                    <div class="carousel-track">
+                        <div class="carousel-item section" style="min-width:320px; text-align:center;">
+                            <p style="font-style:italic; margin-bottom:1rem;">“After one wash my hair felt stronger and healthier. The scent is heavenly.”</p>
+                            <strong>– Maya R.</strong>
+                        </div>
+                        <div class="carousel-item section" style="min-width:320px; text-align:center;">
+                            <p style="font-style:italic; margin-bottom:1rem;">“Salon-quality results at home. The oil adds shine without weighing down.”</p>
+                            <strong>– Olivia F.</strong>
+                        </div>
+                        <div class="carousel-item section" style="min-width:320px; text-align:center;">
+                            <p style="font-style:italic; margin-bottom:1rem;">“Clean ingredients and real performance. My curls have never looked better.”</p>
+                            <strong>– Jasmine K.</strong>
+                        </div>
+                    </div>
+                    <div class="carousel-nav">
+                        <button class="carousel-button" data-dir="-1">‹</button>
+                        <button class="carousel-button" data-dir="1">›</button>
                     </div>
                 </div>
             </section>
@@ -522,34 +643,49 @@
         });
 
         // Add fade-in animation to elements when they come into view
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('fade-in'); });
         }, observerOptions);
+        document.querySelectorAll('.product-card, .feature, .section h2').forEach(el => observer.observe(el));
 
-        // Observe all product cards and features
-        document.querySelectorAll('.product-card, .feature').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Add some interactivity to product cards
+        // Product card hover interactivity
         document.querySelectorAll('.product-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
+            card.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-10px) scale(1.02)'; });
+            card.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0) scale(1)'; });
         });
+
+        // Parallax effect on hero background
+        const heroBg = document.querySelector('.hero-bg');
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY * 0.2;
+            if (heroBg) heroBg.style.transform = `translateY(${y}px) scale(1.08)`;
+        }, { passive: true });
+
+        // Lightweight carousel logic (autoplay + buttons)
+        function setupCarousel(root) {
+            const track = root.querySelector('.carousel-track');
+            const buttons = root.querySelectorAll('.carousel-button');
+            let autoplayId;
+
+            function scrollByItems(dir = 1) {
+                const item = root.querySelector('.carousel-item') || track.firstElementChild;
+                const amount = item ? item.getBoundingClientRect().width + 16 : 320;
+                track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+            }
+
+            buttons.forEach(btn => btn.addEventListener('click', () => scrollByItems(Number(btn.dataset.dir))));
+
+            function startAutoplay() { autoplayId = setInterval(() => scrollByItems(1), 3500); }
+            function stopAutoplay() { clearInterval(autoplayId); }
+            root.addEventListener('mouseenter', stopAutoplay);
+            root.addEventListener('mouseleave', startAutoplay);
+            root.addEventListener('touchstart', stopAutoplay, { passive: true });
+            root.addEventListener('touchend', startAutoplay, { passive: true });
+            startAutoplay();
+        }
+
+        document.querySelectorAll('.carousel').forEach(setupCarousel);
     </script>
 </body>
 </html>
