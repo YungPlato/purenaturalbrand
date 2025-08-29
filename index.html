@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pure Natural Brand - Premium Natural Hair Care</title>
-    <meta name="description" content="Premium e-commerce website design for Pure Natural Brand - luxury hair care with nature-inspired aesthetics">
+    <meta name="description" content="Premium natural shampoo brand – salon results powered by botanicals">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=1960&auto=format&fit=crop">
     
     <!-- CSS Styles -->
     <style>
@@ -97,16 +99,15 @@
         .hero-bg {
             position: absolute;
             inset: 0;
-            background: url('https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=1960&auto=format&fit=crop') center/cover no-repeat;
-            transform: scale(1.05);
-            filter: contrast(1.05) saturate(1.05);
+            background: url('https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=1960&auto=format&fit=crop') center/cover no-repeat;
+            transform: none;
+            filter: contrast(1.02) saturate(1.03);
         }
 
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(120deg, rgba(30, 55, 42, 0.65), rgba(20, 20, 20, 0.35));
-            backdrop-filter: blur(1px);
+            background: linear-gradient(120deg, rgba(30, 55, 42, 0.55), rgba(20, 20, 20, 0.25));
         }
 
         .hero-content {
@@ -147,6 +148,12 @@
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(8deg); }
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .leaf { animation: none !important; }
+            .fade-in { animation: none !important; }
         }
 
         .cta-button {
@@ -206,6 +213,7 @@
             padding: 0.5rem 0.25rem 1rem;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            content-visibility: auto;
         }
 
         .carousel-track::-webkit-scrollbar { display: none; }
@@ -643,12 +651,7 @@
             card.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0) scale(1)'; });
         });
 
-        // Parallax effect on hero background
-        const heroBg = document.querySelector('.hero-bg');
-        window.addEventListener('scroll', () => {
-            const y = window.scrollY * 0.2;
-            if (heroBg) heroBg.style.transform = `translateY(${y}px) scale(1.08)`;
-        }, { passive: true });
+        // Remove parallax for better performance
 
         // Lightweight carousel logic (autoplay + buttons)
         function setupCarousel(root) {
@@ -664,13 +667,23 @@
 
             buttons.forEach(btn => btn.addEventListener('click', () => scrollByItems(Number(btn.dataset.dir))));
 
-            function startAutoplay() { autoplayId = setInterval(() => scrollByItems(1), 3500); }
+            function startAutoplay() {
+                if (autoplayId) return;
+                autoplayId = setInterval(() => scrollByItems(1), 4000);
+            }
             function stopAutoplay() { clearInterval(autoplayId); }
             root.addEventListener('mouseenter', stopAutoplay);
             root.addEventListener('mouseleave', startAutoplay);
             root.addEventListener('touchstart', stopAutoplay, { passive: true });
             root.addEventListener('touchend', startAutoplay, { passive: true });
-            startAutoplay();
+
+            // Pause when offscreen to save CPU/battery
+            const visObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) startAutoplay(); else { stopAutoplay(); autoplayId = undefined; }
+                });
+            }, { threshold: 0.1 });
+            visObserver.observe(root);
         }
 
         document.querySelectorAll('.carousel').forEach(setupCarousel);
